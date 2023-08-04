@@ -1,4 +1,6 @@
-export interface IColors {
+import { isDarkMode } from "../App"
+
+interface IColors {
     bgMain: string,
     bg100: string,
     bg200: string,
@@ -9,7 +11,7 @@ export interface IColors {
     secondary: string
 }
 
-export const DarkTheme : IColors = {
+const DarkTheme : IColors = {
     bgMain: '#121212',
     bg100: '#282828',
     bg200: '#3f3f3f',
@@ -20,7 +22,7 @@ export const DarkTheme : IColors = {
     secondary: '#85a7ff'
 }
 
-export const LightTheme : IColors = {
+const LightTheme : IColors = {
     bgMain: '#ffffff',
     bg100: '#ffeddd',
     bg200: '#ffdbbc',
@@ -30,3 +32,5 @@ export const LightTheme : IColors = {
     primary: '#ff8000',
     secondary: '#007fff'
 }
+
+export const Colors : IColors = isDarkMode ? DarkTheme : LightTheme;

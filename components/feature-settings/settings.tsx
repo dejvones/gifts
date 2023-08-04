@@ -1,6 +1,13 @@
-import { Text, View } from "react-native";
-
+import { createStackNavigator } from "@react-navigation/stack";
+import { SettingsOverview } from "./settings-overview";
+import { SettingsDetail } from "./settings-detail";
 
 export function Settings() : JSX.Element {
-    return(<View><Text>Settings</Text></View>)
+    const Stack = createStackNavigator();
+    return(
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Home" component={SettingsOverview}/>
+            <Stack.Screen name="Detail" component={SettingsDetail}/>
+        </Stack.Navigator>
+    )
 }
