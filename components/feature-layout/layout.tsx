@@ -10,6 +10,7 @@ import { ParamListBase, RouteProp } from "@react-navigation/native";
 import { TabElement } from "./tab-element";
 import { Icon } from '@rneui/themed';
 import { Settings } from '../feature-settings/settings';
+import { Home } from '../feature-home/home';
 
 export function Layout(): JSX.Element {
     const Tab = createBottomTabNavigator();
@@ -41,7 +42,7 @@ const tabs : TabElement[] = [
     {
         name: 'Home',
         iconName: 'home-outline',
-        component: History
+        component: Home
     },
     {
         name: 'Explore',

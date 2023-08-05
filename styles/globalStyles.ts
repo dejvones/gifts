@@ -21,5 +21,14 @@ export const GlobalStyles = StyleSheet.create({
         height: '100%',
         alignContent: 'stretch'
     },
+    header: {
+        color: Colors.primary,
+        fontSize: 25,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        marginVertical: 10,
+        borderBottomColor: Colors.primary,
+        borderBottomWidth: 1
+    }
 
 }) 
