@@ -26,8 +26,8 @@ export function Select(props: props) {
     }
 
     return(
-        <View>
-            <TouchableOpacity onPress={() => setShow(true)} containerStyle={styles.container}>
+        <View style={GlobalStyles.main}>
+            <TouchableOpacity disabled={valueData.length === 0} onPress={() => setShow(true)} containerStyle={styles.container}>
                 <View style={[GlobalStyles.rowFlex, styles.between]}>
                     <Text style={[GlobalStyles.text, styles.iconHeader]}>{displayData[selected]}</Text>
                     <Icon name={show ? 'chevron-up' : 'chevron-down'} type='material-community' color={Colors.text} iconStyle={styles.icon} />
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.bg100,
         paddingHorizontal: 5,
         borderRadius: 10,
-        margin: 5
+        margin: 5,
     },
     iconHeader: {
         fontSize: 20

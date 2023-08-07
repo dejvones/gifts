@@ -24,11 +24,23 @@ export const GlobalStyles = StyleSheet.create({
     header: {
         color: Colors.primary,
         fontSize: 25,
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        padding: 10,
         marginVertical: 10,
         borderBottomColor: Colors.primary,
         borderBottomWidth: 1
+    },
+    list: {
+        marginTop: 5,
+        padding: 5
+    },
+    listItem: {
+        backgroundColor: Colors.bg200,
+        marginVertical: 2.5,
+        paddingVertical: 10
+    },
+    addButton: {
+        backgroundColor: Colors.primary,
+        marginBottom: 15
     }
 
 }) 

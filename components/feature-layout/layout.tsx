@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     tabBar: {
         backgroundColor: Colors.bgMain,
         borderTopColor: Colors.primary,
-        borderTopWidth: 1
+        borderTopWidth: 0.5
     },
     tabBarLabel: {
         color: Colors.primary

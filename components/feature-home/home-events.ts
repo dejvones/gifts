@@ -5,7 +5,7 @@ export interface HomeYear{
     content: HomeEvent[]
 }
 
-interface HomeEvent {
+export interface HomeEvent {
     id: string,
     type: Event
 }
