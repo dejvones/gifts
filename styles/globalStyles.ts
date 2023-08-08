@@ -41,6 +41,8 @@ export const GlobalStyles = StyleSheet.create({
     addButton: {
         backgroundColor: Colors.primary,
         marginBottom: 15
-    }
-
+    },
+    icon: {
+        fontSize: 30,
+    },
 }) 

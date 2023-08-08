@@ -8,7 +8,8 @@ interface IColors {
     bg400: string,
     text: string,
     primary: string,
-    secondary: string
+    secondary: string,
+    danger: string
 }
 
 const DarkTheme : IColors = {
@@ -19,7 +20,8 @@ const DarkTheme : IColors = {
     bg400: '#717171',
     text: 'white',
     primary: '#ffab66',
-    secondary: '#85a7ff'
+    secondary: '#85a7ff',
+    danger: '#dc3545'
 }
 
 const LightTheme : IColors = {
@@ -30,7 +32,8 @@ const LightTheme : IColors = {
     bg400: '#ffb77b',
     text: 'black',
     primary: '#ff8000',
-    secondary: '#007fff'
+    secondary: '#007fff',
+    danger: '#dc3545'
 }
 
 export const Colors : IColors = isDarkMode ? DarkTheme : LightTheme;

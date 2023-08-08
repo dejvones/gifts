@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Icon, ListItem, Text } from "@rneui/themed"
+import { Button, Icon, ListItem, Text } from "@rneui/themed"
 import { StyleSheet, View } from "react-native"
 import { GlobalStyles } from "../../styles/globalStyles"
 import { useEffect, useState } from "react"
@@ -154,25 +154,37 @@ export function HomeOverview({ navigation} : any ) : JSX.Element {
         navigation.navigate('h-GiftAdd');
     }
 
+    function addPerson(): void {
+        navigation.navigate('h-PersonEdit', {
+            id: undefined
+        });
+    }
+
+    function editPerson(): void {
+        navigation.navigate('h-PersonEdit', {
+            id: selectedPerson?.id
+        })
+    }
+
     return(
         <View>
             <Text style={GlobalStyles.header}>Gifted people </Text>
             <View style={[GlobalStyles.rowFlex, styles.group]}>
-                <Button buttonStyle={[GlobalStyles.addButton, styles.groupButton]} containerStyle={styles.groupButtonContainer}>
+                <Button buttonStyle={[GlobalStyles.addButton, styles.groupButton]} onPress={() => addPerson()} containerStyle={styles.groupButtonContainer}>
                     <View>
-                        <Icon name='account-plus' type='material-community' color={Colors.bgMain} iconStyle={styles.icon}/>
+                        <Icon name='account-plus' type='material-community' color={Colors.bgMain} iconStyle={GlobalStyles.icon}/>
                         <Text style={{color: Colors.bgMain}}>New person</Text>
                     </View>
                 </Button>
-                <Button buttonStyle={[styles.groupButton, styles.secondButton]} containerStyle={styles.groupButtonContainer}>
+                <Button buttonStyle={[styles.groupButton, styles.secondButton]} onPress={() => editPerson()} containerStyle={styles.groupButtonContainer}>
                     <View>
-                        <Icon name='account-edit' type='material-community' color={Colors.primary} iconStyle={styles.icon}/>
+                        <Icon name='account-edit' type='material-community' color={Colors.primary} iconStyle={GlobalStyles.icon}/>
                         <Text style={{color: Colors.primary}}>Edit person</Text>
                     </View>
                 </Button>
                 <Button buttonStyle={[GlobalStyles.addButton, styles.groupButton]} onPress={() => addGift()} containerStyle={styles.groupButtonContainer}>
                     <View>
-                        <Icon name='plus' type='material-community' color={Colors.bgMain} iconStyle={styles.icon}/>
+                        <Icon name='plus' type='material-community' color={Colors.bgMain} iconStyle={GlobalStyles.icon}/>
                         <Text style={{color: Colors.bgMain}}>New gift</Text>
                     </View>
                 </Button>
@@ -193,7 +205,7 @@ export function HomeOverview({ navigation} : any ) : JSX.Element {
                                             {EventToString(event.type)}
                                         </ListItem.Title>
                                     </ListItem.Content>
-                                    <ListItem.Chevron color={Colors.text} iconStyle={styles.icon}/>
+                                    <ListItem.Chevron color={Colors.text} iconStyle={GlobalStyles.icon}/>
                                 </ListItem>
                             </TouchableOpacity>
                         ))}
@@ -218,9 +230,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginHorizontal: 10,
         marginTop: 10
-    },
-    icon: {
-        fontSize: 30,
     },
     mainButton: {
         marginBottom: 0

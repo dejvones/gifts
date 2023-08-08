@@ -7,15 +7,17 @@ import { Colors } from "../../styles/colors";
 
 interface props {
     text: string,
-    goBack: () => void
+    goBack: () => void,
+    element?: JSX.Element
 }
 
 export function Header(props : props): JSX.Element {
-    const {text, goBack} = props;
+    const {text, goBack, element} = props;
     return (
         <View style={[GlobalStyles.rowFlex, styles.container]}>
             <GoBack clicked={goBack}/>
             <Text style={[GlobalStyles.header, styles.header]}>{text}</Text>
+            {element ? element : <View></View>}
         </View>
     )
 }
@@ -26,7 +28,9 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.primary,
         borderBottomWidth: 1,
         marginVertical: 10,
-        paddingVertical: 5
+        paddingVertical: 5,
+        justifyContent: 'space-between',
+        paddingRight: 15
     },
     header: {
         borderBottomWidth: 0,
