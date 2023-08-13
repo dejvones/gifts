@@ -1,7 +1,7 @@
 import { Gift } from "./gifts";
 
 export interface Person {
-    id: string,
+    id?: string,
     name: string,
     gifts: Gift[]
 }

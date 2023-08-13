@@ -1,99 +1,15 @@
 import { Button, Icon, ListItem, Text } from "@rneui/themed"
 import { StyleSheet, View } from "react-native"
 import { GlobalStyles } from "../../styles/globalStyles"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Person } from "../../models/person"
 import { Select } from "../shared/select"
 import { HomeEvent, HomeYear } from "./home-events"
 import { Colors } from "../../styles/colors"
 import { EventToString } from "../../utils/shared/enum-to-text"
 import { TouchableOpacity } from "react-native-gesture-handler"
-
-
-const TESTDATA = [
-    {
-        id: '1',
-        name: 'Janicka',
-        gifts: [
-            {
-                id: '1',
-                title: 'tricko',
-                description: '',
-                year: 2022,
-                event: 1
-            },
-            {
-                id: '2',
-                title: 'kabelka',
-                description: '',
-                year: 2022,
-                event: 2
-            },
-            {
-                id: '3',
-                title: 'vonavka',
-                description: '',
-                year: 2022,
-                event: 2
-            },
-            {
-                id: '4',
-                title: 'pena na holeni',
-                description: '',
-                year: 2021,
-                event: 1
-            },
-            {
-                id: '5',
-                title: 'knizka',
-                description: '',
-                year: 2021,
-                event: 3
-            }
-        ]
-    },
-    {
-        id: '2',
-        name: 'Davca',
-        gifts: [
-            {
-                id: '1',
-                title: 'trickoD',
-                description: '',
-                year: 2022,
-                event: 2
-            },
-            {
-                id: '2',
-                title: 'kabelkaD',
-                description: '',
-                year: 2023,
-                event: 2
-            },
-            {
-                id: '3',
-                title: 'vonavkaD',
-                description: '',
-                year: 2022,
-                event: 4
-            },
-            {
-                id: '4',
-                title: 'pena na holeniD',
-                description: '',
-                year: 2021,
-                event: 1
-            },
-            {
-                id: '5',
-                title: 'knizkaD',
-                description: '',
-                year: 2021,
-                event: 3
-            }
-        ]
-    },
-]
+import { getPeople } from "../../utils/data/People/people-data"
+import { useIsFocused } from "@react-navigation/native"
 
 let selectedPerson : Person | undefined; 
 
@@ -101,15 +17,30 @@ export function HomeOverview({ navigation} : any ) : JSX.Element {
     const [people, setPeople] = useState<Person[]>([]);
     const [gifts, setGifts] = useState<HomeYear[]>([]);
 
+    const isFocused = useIsFocused();
+    const selectRef = useRef<any>();
+
     useEffect(() => {
-        //TODO DB
-        setPeople(TESTDATA);
-        selectedPerson = TESTDATA[0];
+        setData();
+    }, [isFocused])
 
-        setGifts(findData());
-    }, [])
+    function setData(): void {
+        let data : Person[] = getPeople();
+        setPeople(data);
 
-    function findData(): HomeYear[] {
+        if (data.length > 0 && (!selectedPerson || !data.find(p => p.id === selectedPerson?.id))){
+            selectedPerson = data[0];
+            selectRef.current.setNewSelect(0);
+        }
+        else if (data.length === 0){
+            selectedPerson = undefined;
+            selectRef.current.setNewSelect(0);
+        }
+    
+        setGifts(findGifts());
+    }
+
+    function findGifts(): HomeYear[] {
         if (!selectedPerson?.gifts) return [];
 
         const allGifts = selectedPerson.gifts;
@@ -138,7 +69,7 @@ export function HomeOverview({ navigation} : any ) : JSX.Element {
 
     function selectedChanged(id: string): void {
         selectedPerson = people.find(p => p.id === id);
-        setGifts(findData());
+        setGifts(findGifts());
     }
 
     function eventSelected(event: HomeEvent, year: number) : void{
@@ -191,7 +122,7 @@ export function HomeOverview({ navigation} : any ) : JSX.Element {
             </View>
             <View style={[GlobalStyles.rowFlex, styles.select]}>
                 <Text style={styles.selectText}>Gifts for:</Text>
-                <Select displayData={people.map(p => p.name)} valueData={people.map(p => p.id)} onSelect={selectedChanged}/>
+                <Select ref={selectRef} displayData={people.map(p => p.name)} valueData={people.map(p => p.id ?? '')} onSelect={selectedChanged}/>
             </View>
             <View style={GlobalStyles.list}>
                 {gifts.map((item, index) => (

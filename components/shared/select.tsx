@@ -1,6 +1,6 @@
-import { BottomSheet, ListItem, Text } from "@rneui/themed";
-import { useState } from "react"
-import { StyleSheet, View } from "react-native";
+import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
+import { forwardRef, useImperativeHandle, useState } from "react"
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { GlobalStyles } from "../../styles/globalStyles";
 import { Icon } from "@rneui/base";
@@ -13,11 +13,17 @@ interface props {
     onSelect: (_: string) => void
 }
 
-export function Select(props: props) {
+export const Select = forwardRef((props : props, ref : any) => {
     const {displayData, valueData, onSelect} = props;
 
     const [show, setShow] = useState(false);
     const [selected, setSelected] = useState(0);
+
+    useImperativeHandle(ref, () => ({
+        setNewSelect(index: number) : void {
+            setSelected(index);
+        }
+    }))
 
     function nextSelect(index: number){
         setSelected(index);
@@ -35,6 +41,12 @@ export function Select(props: props) {
                 
             </TouchableOpacity>
             <BottomSheet isVisible={show}>
+                <View>
+                <Button TouchableComponent={TouchableWithoutFeedback} containerStyle={{alignSelf: 'flex-end'}} onPress={() => setShow(false)} 
+                        buttonStyle={{backgroundColor: 'transparent'}} 
+                icon={
+                    <Icon name='close' type='material-community' color={Colors.primary} iconStyle={{fontSize: 30}}/>
+                }/>
                 {displayData.map((d, index) => (
                     <ListItem key={index} onPress={() => nextSelect(index)} containerStyle={selected === index ? styles.itemActive : styles.item}>
                         <ListItem.Content>
@@ -42,10 +54,11 @@ export function Select(props: props) {
                         </ListItem.Content>
                     </ListItem>
                 ))}
+                </View>
             </BottomSheet>
         </View>
     )
-}
+});
 
 const styles = StyleSheet.create({
     container: {

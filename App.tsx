@@ -1,15 +1,15 @@
 import 'react-native-gesture-handler';
+import 'react-native-get-random-values'
 
 import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import { useColorScheme } from 'react-native';
-
 import { GlobalStyles } from './styles/globalStyles';
 import { Layout } from './components/feature-layout/layout';
 import { Colors } from './styles/colors';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 
-export var isDarkMode : boolean;
+export let isDarkMode : boolean;
 
 function App(): JSX.Element {
   isDarkMode = useColorScheme() === 'dark';
@@ -26,10 +26,9 @@ function App(): JSX.Element {
     <NavigationContainer theme={MainTheme}>
     <SafeAreaView style={GlobalStyles.main}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={Colors.bgMain}/>
-      <Layout/>
+        <Layout/>
     </SafeAreaView>
     </NavigationContainer>
-
   );
 }
 

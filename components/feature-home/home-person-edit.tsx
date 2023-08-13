@@ -6,6 +6,7 @@ import { GlobalStyles } from "../../styles/globalStyles";
 import { GInput } from "../shared/g-input";
 import { Person } from "../../models/person";
 import { Delete } from "../shared/delete";
+import { getPerson, insertPerson, removePerson, updatePerson } from "../../utils/data/People/people-data";
 
 
 let actualPerson : Person | undefined;
@@ -19,16 +20,13 @@ export function HomePersonEdit({route, navigation} : any): JSX.Element {
 
     useEffect(() => {
         if (id){
-            //TODO db
-            setDefaultName(id);
-            nameChanged(id);
-            actualPerson = {name: '', id: '', gifts: []};
+            actualPerson = getPerson(id) ?? {name: '', id: '', gifts: []};
+            setDefaultName(actualPerson.name);
         }
         else{
-            nameChanged('');
             actualPerson = {name: '', id: '', gifts: []};
         }
-            
+        nameChanged(actualPerson.name);
     }, []);
 
     function goBack(): void {
@@ -47,17 +45,24 @@ export function HomePersonEdit({route, navigation} : any): JSX.Element {
         if (!actualPerson || saving) return;
         setSaving(true);
         actualPerson = {...actualPerson, name: name ?? ''};
+        actualPerson.id ? updatePerson(actualPerson) : insertPerson(actualPerson);
 
-        //TODO insert/update
+        await waitToSync();
+    }
 
-        await new Promise(resolve => setTimeout(resolve, 1000)).then(() => setSaving(false));
+    async function waitToSync(): Promise<void> {
+        await new Promise(resolve => setTimeout(resolve, 250)).then(() => {
+            setSaving(false);
+            navigation.goBack();
+        });
     }
 
     async function deletePerson() : Promise<void>{
-        if (saving) return;
+        if (!actualPerson || saving || !(actualPerson.id)) return;
         setSaving(true);
 
-        await new Promise(resolve => setTimeout(resolve, 1000)).then(() => setSaving(false));
+        removePerson(id)
+        await waitToSync();
     }
 
     return (
